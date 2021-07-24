@@ -1,0 +1,69 @@
+<div class="col-9">
+    <div class="container">
+    <h1>Registrar Producto</h1>
+    <div class="containerItem">
+    <div class="inner" id="containerform">
+        <form [formGroup]="form" id="formProducto" >
+          <div class="form-group" >    
+             <div>
+              <mat-form-field class="matForm">
+                <mat-label>Descripcion</mat-label>
+                <input [(ngModel)]="Descripcion" formControlName="txtDescripcion" class="text-Descripcion" id="txtDescripcion" matInput placeholder="Descripcion"  >
+              </mat-form-field>
+             <!-- <label for="commentDescripcion" class="label">Descripcion</label>
+              <input type="text" [(ngModel)]="Descripcion" formControlName="txtDescripcion" class="text-Descripcion" id="txtDescripcion"/> -->
+            </div>
+            <div>
+            <!--    <label for="commentCategoria" class="label">Categoria</label>
+                 <input type="text" [(ngModel)]="Categoria" formControlName="txtCategoria" class="text-Categoria" id="txtCategoria"/> -->
+                 <mat-form-field appearance="fill">
+                  <mat-label>Categoria</mat-label>
+                  <mat-select formControlName="txtCategoria" [(ngModel)]="Categoria">
+                    <mat-option  *ngFor="let food of ListaCategoria" value={{food.nombreCategoria}} >
+                      {{food.nombreCategoria}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+              <div>
+                <mat-form-field class="matForm">
+                  <mat-label>Stock</mat-label>
+                  <input [(ngModel)]="Stock" formControlName="txtStock" class="text-Stock" id="txtStock" matInput placeholder="Stock"  >
+                </mat-form-field>
+            <!--    <label for="commentStock" class="label">Stock</label>
+               <input type="text" [(ngModel)]="Stock" formControlName="txtStock" class="text-Stock" id="txtStock"/> -->
+              </div>
+              <div>
+                <mat-form-field class="matForm">
+                  <mat-label>Costo</mat-label>
+                  <input [(ngModel)]="Costo" formControlName="txtCosto" class="text-Costo" id="txtCosto" matInput placeholder="Costo"  >
+                </mat-form-field>
+            <!--    <label for="commentCosto" class="label">Costo</label>
+              <input type="text" [(ngModel)]="Costo" formControlName="txtCosto" class="text-Costo" id="txtCosto"/> -->
+              </div>
+              <div>
+                <mat-form-field class="matForm">
+                  <mat-label>Precio</mat-label>
+                  <input [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"  matInput placeholder="Precio" >
+                </mat-form-field>
+            <!--    <label for="commentPrecio" class="label">Precio</label>
+                 <input type="text" [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"/> -->
+              </div>
+              <br/>
+              <div>
+                  <button mat-raised-button color="primary" class="button" (click)="AgregarProducto()">{{(loading) ? 'Cargando....' : 'Guardar'}}</button>
+              </div>
+            </div>
+         <!--   <div id="contenedorImg">
+              <img [src]="Imagen" id="imagen"  />
+            </div> -->
+        </form>
+      </div>
+        <div class="inner" id="contenedorImg" *ngIf="previsualizacion">
+          <input #inputImagen class='button' (change)="capturarFile($event)" id="fileInput" type="file" />
+          <button mat-raised-button color="primary" class="clear-image" type="button" (click)="clearImage()">Quitar</button>
+          <img id="imagen"  [src]="previsualizacion" alt="">
+      </div>
+  </div>
+    </div>
+    </div>

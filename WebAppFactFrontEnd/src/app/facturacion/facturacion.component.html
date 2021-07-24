@@ -1,0 +1,114 @@
+<div class="col-9">
+    <div class="container">
+    
+    <div class="containerItem">
+    <div class="inner" id="containerform">
+        <form [formGroup]="form" id="formProducto" >
+          <div >
+            <div class="form-group" >
+              <div >
+                <div style="float:right;">
+                  <mat-form-field class="matForm" >
+                    <mat-label>Fecha</mat-label>
+                    <input [(ngModel)]="Fecha" formControlName="txtFecha" class="text-Fecha" id="txtFecha" matInput placeholder="Fecha" readonly >
+                  </mat-form-field>
+                </div>
+                <div>
+                <h1>Facturacion</h1>
+              </div>
+              
+            </div>
+              <mat-form-field class="matForm">
+                <mat-label>IdProducto</mat-label>
+                <input [(ngModel)]="IdProducto" formControlName="txtIdProducto" class="text-IdProducto" id="txtIdProducto"  matInput placeholder="IdProducto"  >
+              </mat-form-field>
+              <button mat-raised-button color="primary" class="button" (click)="BuscarProductoId()" style="margin-left: 2%;" >Buscar</button>
+            </div>
+            
+            <div >
+              <div class="inner" id="contenedorImg" *ngIf="previsualizacion" style="float:right; ">
+                <img id="imagen"  [src]="previsualizacion" alt="" >
+              </div>
+            <div class="form-group" style="" >
+              <mat-form-field class="matForm" style="margin-right: 3%; width: 30%;" >
+                <mat-label>Descripcion</mat-label>
+                <input [(ngModel)]="Descripcion" formControlName="txtDescripcion" class="text-Descripcion" id="txtDescripcion"  matInput placeholder="Descripcion" readonly >
+              </mat-form-field>
+              <mat-form-field class="matForm" style="margin-right: 3%;">
+                <mat-label>Cantidad</mat-label>
+                <input [(ngModel)]="Cantidad" formControlName="txtCantidad" class="text-Cantidad" id="txtCantidad"  matInput placeholder="Cantidad"  >
+              </mat-form-field>
+              <mat-form-field class="matForm" style="margin-right: 3%;" >
+                <mat-label>Precio</mat-label>
+                <input [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"  matInput placeholder="Precio" readonly >
+              </mat-form-field>
+            </div>
+            
+          </div>
+          <div>
+            <button mat-raised-button color="primary" class="button" (click)="AgregarDetalleVenta()" style="margin: 2%;">Agregar</button>
+            <button mat-raised-button color="primary" class="button" (click)="LimpiarCampos()">Cancelar</button>
+        </div>
+          </div>
+          <br/>
+          <div class="form-group" > 
+              <br/>
+              <div>
+                  <button mat-raised-button color="primary" class="button" (click)="GuardarVenta()" style="margin: 2%;">{{(loading) ? 'Cargando....' : 'Guardar'}}</button>
+                  <button mat-raised-button color="primary" class="button" (click)="LimpiarTodo()">Cancelar Venta</button>
+              </div>
+              <div style="float:right;">
+                <mat-form-field class="matForm" >
+                  <mat-label>Total</mat-label>
+                  <input [(ngModel)]="Total" formControlName="txtTotal" class="text-Total" id="txtTotal"  matInput placeholder="Total" readonly >
+                </mat-form-field>
+              </div>
+            </div>
+        </form>
+      </div>
+      <br/>
+      <!--listado detalle-->
+      
+    
+<h1>Lista de Productos</h1>
+  <table mat-table [dataSource]="DetalleVenta" class="mat-elevation-z8" >
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="IdProducto">
+      <th mat-header-cell *matHeaderCellDef><span class="tituloCell"> IdProducto </span> </th>
+      <td mat-cell *matCellDef="let element"> {{element.IdProducto}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Descripcion">
+      <th mat-header-cell *matHeaderCellDef><span class="tituloCell"> Descripcion </span> </th>
+      <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Cantidad">
+      <th mat-header-cell *matHeaderCellDef><span class="tituloCell"> Cantidad</span> </th>
+      <td mat-cell *matCellDef="let element"> {{element.Cantidad}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Precio">
+      <th mat-header-cell *matHeaderCellDef><span class="tituloCell"> Precio</span> </th>
+      <td mat-cell *matCellDef="let element"> {{element.Precio}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eliminar">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td><button  class="btn" *matCellDef="let element;let i=index" (click)="EliminarProducto(i,element.Cantidad,element.Precio)"><span class=""></span>Eliminar</button ></td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+    </div>
+</div>
+

@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+    
+  }
+
+  #tdImg{
+    height:200px; 
+    width:250px;
+  }
+
+  .tituloCell{
+   font-weight: bold;
+   font-size: 100%;
+  }
+
+.btn{
+    margin-right: 5%;
+}
+
+table th, td{
+    text-align: center;
+}
+
+#imagen{
+  margin: 2%;
+  min-width: 30%;
+  min-height: 30%;
+  width: 200px;
+  height: 130px;
+}
+
+#contenedorImg{
+  
+  max-width: 50%;
+  min-width: 20%;
+  max-height: 50%;
+  min-height: 20%;
+  
+}
+

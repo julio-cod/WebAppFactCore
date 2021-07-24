@@ -1,0 +1,48 @@
+#imagen{
+    margin: 2%;
+    min-width: 50%;
+    min-height: 50%;
+    width: 300px;
+    height: 230px;
+}
+#formProducto{
+    display: inline-block;
+}
+
+#containerform{
+    width: 30%;
+    height: 200%;
+}
+
+#contenedorImg{
+    
+    max-width: 100%;
+    min-width: 50%;
+    max-height: 100%;
+    min-height: 50%;
+    
+}
+
+.container{
+    text-align: center; 
+    
+    
+}
+
+.containerBtnGuardar{
+    margin: 2%;
+}
+
+.matForm{
+    width: 150%;
+    max-width: 150%;
+    
+}
+  
+  .containerItem {
+    display: flex;
+    justify-content: center;
+    
+    flex-flow: row wrap;
+    
+  }
