@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+    
+  }
+
+  .tituloCell{
+   font-weight: bold;
+   font-size: 100%;
+  }
+
+.btn{
+    margin-right: 5%;
+}
+
+table th, td{
+    text-align: center;
+}
+
+#titleProducto{
+    text-align: center;
+}
+
+  .mat-row:hover {
+    background-color: #D8E4FA
+    ;
+  }

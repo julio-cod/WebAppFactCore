@@ -3,7 +3,7 @@
     
     <div class="containerItem">
     <div class="inner" id="containerform">
-        <form [formGroup]="form" id="formProducto" >
+        <form [formGroup]="form" id="formProducto" errorTailor >
           <div >
             <div class="form-group" >
               <div >
@@ -23,6 +23,7 @@
                 <input [(ngModel)]="IdProducto" formControlName="txtIdProducto" class="text-IdProducto" id="txtIdProducto"  matInput placeholder="IdProducto"  >
               </mat-form-field>
               <button mat-raised-button color="primary" class="button" (click)="BuscarProductoId()" style="margin-left: 2%;" >Buscar</button>
+              <button mat-raised-button color="primary" class="button" (click)="ConsultarProductos()" style="margin-left: 2%;" >Consultar</button>
             </div>
             
             <div >
@@ -36,7 +37,7 @@
               </mat-form-field>
               <mat-form-field class="matForm" style="margin-right: 3%;">
                 <mat-label>Cantidad</mat-label>
-                <input [(ngModel)]="Cantidad" formControlName="txtCantidad" class="text-Cantidad" id="txtCantidad"  matInput placeholder="Cantidad"  >
+                <input [(ngModel)]="Cantidad" formControlName="txtCantidad" class="text-Cantidad" id="txtCantidad"  matInput placeholder="Cantidad" (keypress)="onlyNumberKey($event)"  >
               </mat-form-field>
               <mat-form-field class="matForm" style="margin-right: 3%;" >
                 <mat-label>Precio</mat-label>
@@ -46,7 +47,7 @@
             
           </div>
           <div>
-            <button mat-raised-button color="primary" class="button" (click)="AgregarDetalleVenta()" style="margin: 2%;">Agregar</button>
+            <button [disabled]="form.invalid"  mat-raised-button color="primary" class="button" (click)="AgregarDetalleVenta()" style="margin: 2%;">Agregar</button>
             <button mat-raised-button color="primary" class="button" (click)="LimpiarCampos()">Cancelar</button>
         </div>
           </div>
@@ -57,12 +58,14 @@
                   <button mat-raised-button color="primary" class="button" (click)="GuardarVenta()" style="margin: 2%;">{{(loading) ? 'Cargando....' : 'Guardar'}}</button>
                   <button mat-raised-button color="primary" class="button" (click)="LimpiarTodo()">Cancelar Venta</button>
               </div>
+              <!--
               <div style="float:right;">
                 <mat-form-field class="matForm" >
                   <mat-label>Total</mat-label>
                   <input [(ngModel)]="Total" formControlName="txtTotal" class="text-Total" id="txtTotal"  matInput placeholder="Total" readonly >
                 </mat-form-field>
               </div>
+            -->
             </div>
         </form>
       </div>
@@ -108,6 +111,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  </div>
+  <br/>
+  <div [formGroup]="form" style="float:right;">
+    <mat-form-field class="matForm" >
+      <mat-label>Total</mat-label>
+      <input [(ngModel)]="Total" formControlName="txtTotal" class="text-Total" id="txtTotal"  matInput placeholder="Total" readonly >
+    </mat-form-field>
   </div>
     </div>
 </div>

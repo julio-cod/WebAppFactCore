@@ -7,6 +7,7 @@ import { ModificarproductoComponent } from './producto/modificarproducto/modific
 import { RegistrarproductoComponent } from './producto/registrarproducto/registrarproducto.component';
 import { VisualizarproductoComponent } from './producto/visualizarproducto/visualizarproducto.component';
 import { FacturacionComponent } from './facturacion/facturacion.component';
+import { ConsultalistaproductosComponent } from './producto/consultalistaproductos/consultalistaproductos.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
   {
     path:'facturacion',
     component:FacturacionComponent,
+    //canActivate:[VigilanteGuard]
+  },
+  {
+    path:'consultaproductos',
+    component:ConsultalistaproductosComponent,
     //canActivate:[VigilanteGuard]
   }
 ];

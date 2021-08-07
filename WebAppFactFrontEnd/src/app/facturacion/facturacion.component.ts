@@ -1,9 +1,12 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ProductoService } from '../services/producto.service';
 import { VentasService } from './../../app/services/ventas.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { ConsultalistaproductosComponent } from '../producto/consultalistaproductos/consultalistaproductos.component';
+import { DatatransitoService } from '../services/datatransito.service';
 
 @Component({
   selector: 'app-facturacion',
@@ -17,6 +20,7 @@ export class FacturacionComponent implements OnInit {
   public loading: boolean = false;
   fechaActual?:Date;
   public previsualizacion: string = "./assets/sin_imagen.jpg";
+  
   
   displayedColumns: string[] = ['IdProducto', 'Descripcion', 'Cantidad', 'Precio','eliminar'];
   //DetalleVenta: Array<any> = [{IdVenta:0,IdProducto: 1,Descripcion: "laptop",Cantidad:10,Fecha:'2021-01-22',Precio:100,Ganancia:0}]; 
@@ -43,16 +47,16 @@ export class FacturacionComponent implements OnInit {
   Imagen= '';
   Costo= '';
 
-  constructor(private RestService:VentasService,private RestProductService:ProductoService, private formBuilder: FormBuilder) { }
+  constructor(private RestService:VentasService,private RestProductService:ProductoService, private formBuilder: FormBuilder,public dialog: MatDialog,public datatransitoService:DatatransitoService) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       txtFecha: [''],
       txtTotal: [''],
-      txtIdProducto: [''],
-      txtDescripcion: [''],
-      txtCantidad: [''],
-      txtPrecio: ['']
+      txtIdProducto: ['',[Validators.required]],
+      txtDescripcion: ['',[Validators.required]],
+      txtCantidad: ['',[Validators.required, Validators.maxLength(8)]],
+      txtPrecio: ['',[Validators.required]]
 });
 this.FechaActual();
 
@@ -63,6 +67,7 @@ this.FechaActual();
     this.CalculosSum();
     this.table?.renderRows();
     this.LimpiarCampos();
+    
   }
 /*
   public ActualizarArrayDetalleVenta(IdVenta: any){
@@ -84,32 +89,38 @@ this.FechaActual();
   public GuardarVenta(){
     
     try{
-      this.loading = true;
-    this.RestService.AgregarVenta('/api/ventas/agregarventa',
-    {
-      Fecha: ""+this.Fecha+"",
-      Total: this.Total,
-      TotalGanancia: this.TotalGanancia
-      
-    })
-    .subscribe(respuesta => {
-      this.loading = false;
-      console.log('Respuesta del servidor', respuesta);
-      this.respuesta = respuesta;
-      console.log('this.respuesta.Success: ', this.respuesta.success);
-
-      if(this.respuesta.success == 1){
-        //this.ActualizarArrayDetalleVenta(this.respuesta.idVenta);
-        this.GuardarDetalleVenta(this.respuesta.idVenta);
-        
-        //this.form.reset();
-        console.log('Producto guardado!');
+      if(this.DetalleVenta.length === 0){
+        alert("No hay productos agregados");
       }
       else{
-        console.log('Error al guardar producto');
+        this.loading = true;
+        this.RestService.AgregarVenta('/api/ventas/agregarventa',
+        {
+          Fecha: ""+this.Fecha+"",
+          Total: this.Total,
+          TotalGanancia: this.TotalGanancia
+          
+        })
+        .subscribe(respuesta => {
+          this.loading = false;
+          console.log('Respuesta del servidor', respuesta);
+          this.respuesta = respuesta;
+          console.log('this.respuesta.Success: ', this.respuesta.success);
+    
+          if(this.respuesta.success == 1){
+            //this.ActualizarArrayDetalleVenta(this.respuesta.idVenta);
+            this.GuardarDetalleVenta(this.respuesta.idVenta);
+            
+            //this.form.reset();
+            console.log('Producto guardado!');
+          }
+          else{
+            console.log('Error al guardar producto');
+          }
+          
+        })
       }
       
-    })
     }
     catch(e){
       this.loading = false;
@@ -169,12 +180,18 @@ this.FechaActual();
     
   }
 
+  onlyNumberKey(event:any) {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+}
+
   public LimpiarTodo(){
     //this.form.reset();
     this.Total= 0;
     this.DetalleVenta= [];
     this.table?.renderRows();
     this.FechaActual();
+    this.LimpiarCampos();
+
   }
 
   public LimpiarCampos(){
@@ -183,12 +200,22 @@ this.FechaActual();
     this.Cantidad= 1;
     this.Precio= "";
     this.previsualizacion = "./assets/sin_imagen.jpg";
+
+    this.datatransitoService.IdProducto = "";
+    this.datatransitoService.Descripcion = "";
+    this.datatransitoService.Precio = "";
+    this.datatransitoService.Imagen = "";
+    
   }
+  
+ 
+  
 
   public EliminarProducto(index:any,cant:any,prec:any){
    this.DetalleVenta.splice(index,1);
    this.CalculosRes(cant,prec);
   this.table?.renderRows();
+  
 }
   
   public FechaActual()
@@ -204,5 +231,19 @@ this.FechaActual();
     this.Total = this.Total - (cant * prec);
   }
   
+  ConsultarProductos() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "60%";
+    const dialogRef = this.dialog.open(ConsultalistaproductosComponent,dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      this.IdProducto = this.datatransitoService.IdProducto;
+      this.Descripcion = this.datatransitoService.Descripcion;
+      this.Precio = this.datatransitoService.Precio;
+      this.Imagen = this.datatransitoService.Imagen;
+      this.previsualizacion = this.Imagen;
+      //console.log('Dialog result: ${result}');
+    });
+    
+  }
 
 }

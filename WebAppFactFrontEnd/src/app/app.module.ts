@@ -24,6 +24,9 @@ import { VisualizarproductoComponent } from './producto/visualizarproducto/visua
 import { FacturacionComponent } from './facturacion/facturacion.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
+import { ConsultalistaproductosComponent } from './producto/consultalistaproductos/consultalistaproductos.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -38,13 +41,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ModificarproductoComponent,
     RegistrarproductoComponent,
     VisualizarproductoComponent,
-    FacturacionComponent
+    FacturacionComponent,
+    ConsultalistaproductosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
     MatTableModule,
     HttpClientModule,
@@ -52,7 +55,20 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ErrorTailorModule.forRoot({
+      errors: {
+        useValue: {
+          required: 'Campo requerido',
+          minlength: ({ requiredLength, actualLength }) => 
+                      `Expect ${requiredLength} but got ${actualLength}`,
+          invalidAddress: error => `Address isn't valid`,
+          maxlength: 'Excede la cantida maxima permitida'
+        }
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@
     <h1>Modificar Producto</h1>
     <div class="containerItem">
     <div class="inner" id="containerform">
-        <form [formGroup]="form" id="formProducto" >
+        <form [formGroup]="form" id="formProducto" errorTailor >
           <div class="form-group" >    
            <div>
             <mat-form-field class="matForm">
@@ -41,7 +41,7 @@
               <div>
                 <mat-form-field class="matForm">
                   <mat-label>Stock</mat-label>
-                  <input [(ngModel)]="Stock" formControlName="txtStock" class="text-Stock" id="txtStock" matInput placeholder="Stock"  >
+                  <input [(ngModel)]="Stock" formControlName="txtStock" class="text-Stock" id="txtStock" matInput placeholder="Stock" (keypress)="onlyNumberKey($event)" >
                 </mat-form-field>
             <!--    <label for="commentStock" class="label">Stock</label>
                <input type="text" [(ngModel)]="Stock" formControlName="txtStock" class="text-Stock" id="txtStock"/> -->
@@ -49,7 +49,7 @@
               <div>
                 <mat-form-field class="matForm">
                   <mat-label>Costo</mat-label>
-                  <input [(ngModel)]="Costo" formControlName="txtCosto" class="text-Costo" id="txtCosto" matInput placeholder="Costo"  >
+                  <input [(ngModel)]="Costo" formControlName="txtCosto" class="text-Costo" id="txtCosto" matInput placeholder="Costo" (keypress)="onlyNumberKey($event)" >
                 </mat-form-field>
             <!--    <label for="commentCosto" class="label">Costo</label>
               <input type="text" [(ngModel)]="Costo" formControlName="txtCosto" class="text-Costo" id="txtCosto"/> -->
@@ -57,14 +57,14 @@
               <div>
                 <mat-form-field class="matForm">
                   <mat-label>Precio</mat-label>
-                  <input [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"  matInput placeholder="Precio" >
+                  <input [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"  matInput placeholder="Precio" (keypress)="onlyNumberKey($event)" >
                 </mat-form-field>
             <!--    <label for="commentPrecio" class="label">Precio</label>
                  <input type="text" [(ngModel)]="Precio" formControlName="txtPrecio" class="text-Precio" id="txtPrecio"/> -->
               </div>
               <br/>
               <div>
-                  <button mat-raised-button color="primary" class="button" (click)="enviarData()">Guardar Cambios</button>
+                  <button [disabled]="form.invalid" mat-raised-button color="primary" class="button" (click)="enviarData()">Guardar Cambios</button>
               </div>
             </div>
          <!--   <div id="contenedorImg">

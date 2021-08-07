@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -39,12 +39,12 @@ export class ModificarproductoComponent implements OnInit {
     })
 
         this.form = this.formBuilder.group({
-          txtIdProducto: [''],
-          txtDescripcion: [''],
-          txtCategoria: [''],
-          txtStock: [''],
-          txtCosto: [''],
-          txtPrecio: [''],
+          txtIdProducto: ['',[Validators.required, Validators.maxLength(100)]],
+          txtDescripcion: ['',[Validators.required]],
+          txtCategoria: ['',[Validators.required]],
+          txtStock: ['',[Validators.required]],
+          txtCosto: ['',[Validators.required]],
+          txtPrecio: ['',[Validators.required]],
           txtImagen: ['']
         });
 
@@ -187,6 +187,10 @@ export class ModificarproductoComponent implements OnInit {
     })
 
   }
+
+  onlyNumberKey(event:any) {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+}
 
 
 }
